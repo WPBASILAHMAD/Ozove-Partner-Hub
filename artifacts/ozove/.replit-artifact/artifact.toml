@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Ozove"
+version = "1.0.0"
+id = "artifacts/ozove"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25619
+
+[services.development]
+run = "pnpm --filter @workspace/ozove run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ozove", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/ozove/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25619"
+BASE_PATH = "/"
